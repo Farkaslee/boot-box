@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.box.business.FilmMakerDraftMapper">
+  <resultMap id="BaseResultMap" type="com.boot.box.business.FilmMakerDraft">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="data_source_platform" jdbcType="TINYINT" property="dataSourcePlatform" />
+    <result column="source_film_maker_id" jdbcType="VARCHAR" property="sourceFilmMakerId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="cn_name" jdbcType="VARCHAR" property="cnName" />
+    <result column="en_name" jdbcType="VARCHAR" property="enName" />
+    <result column="other_cn_name" jdbcType="VARCHAR" property="otherCnName" />
+    <result column="other_en_name" jdbcType="VARCHAR" property="otherEnName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="birthplace" jdbcType="VARCHAR" property="birthplace" />
+    <result column="birth_country" jdbcType="VARCHAR" property="birthCountry" />
+    <result column="star_sign" jdbcType="VARCHAR" property="starSign" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="family" jdbcType="VARCHAR" property="family" />
+    <result column="awards" jdbcType="VARCHAR" property="awards" />
+    <result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, data_source_platform, source_film_maker_id, name, cn_name, en_name, other_cn_name, 
+    other_en_name, description, sex, birthday, birthplace, birth_country, star_sign, 
+    profession, avatar, family, awards, data_source, ctime, mtime, created_by, updated_by, 
+    version, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_film_maker_draft
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.boot.box.business.FilmMakerDraft">
+    insert into t_film_maker_draft (id, data_source_platform, source_film_maker_id, 
+      name, cn_name, en_name, 
+      other_cn_name, other_en_name, description, 
+      sex, birthday, birthplace, 
+      birth_country, star_sign, profession, 
+      avatar, family, awards, 
+      data_source, ctime, mtime, 
+      created_by, updated_by, version, 
+      is_delete)
+    values (#{id,jdbcType=INTEGER}, #{dataSourcePlatform,jdbcType=TINYINT}, #{sourceFilmMakerId,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{cnName,jdbcType=VARCHAR}, #{enName,jdbcType=VARCHAR}, 
+      #{otherCnName,jdbcType=VARCHAR}, #{otherEnName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=TINYINT}, #{birthday,jdbcType=VARCHAR}, #{birthplace,jdbcType=VARCHAR}, 
+      #{birthCountry,jdbcType=VARCHAR}, #{starSign,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{family,jdbcType=VARCHAR}, #{awards,jdbcType=VARCHAR}, 
+      #{dataSource,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, 
+      #{isDelete,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.box.business.FilmMakerDraft">
+    insert into t_film_maker_draft
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dataSourcePlatform != null">
+        data_source_platform,
+      </if>
+      <if test="sourceFilmMakerId != null">
+        source_film_maker_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="cnName != null">
+        cn_name,
+      </if>
+      <if test="enName != null">
+        en_name,
+      </if>
+      <if test="otherCnName != null">
+        other_cn_name,
+      </if>
+      <if test="otherEnName != null">
+        other_en_name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="birthplace != null">
+        birthplace,
+      </if>
+      <if test="birthCountry != null">
+        birth_country,
+      </if>
+      <if test="starSign != null">
+        star_sign,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="family != null">
+        family,
+      </if>
+      <if test="awards != null">
+        awards,
+      </if>
+      <if test="dataSource != null">
+        data_source,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="mtime != null">
+        mtime,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dataSourcePlatform != null">
+        #{dataSourcePlatform,jdbcType=TINYINT},
+      </if>
+      <if test="sourceFilmMakerId != null">
+        #{sourceFilmMakerId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cnName != null">
+        #{cnName,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCnName != null">
+        #{otherCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherEnName != null">
+        #{otherEnName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="birthCountry != null">
+        #{birthCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="starSign != null">
+        #{starSign,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="family != null">
+        #{family,jdbcType=VARCHAR},
+      </if>
+      <if test="awards != null">
+        #{awards,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null">
+        #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null">
+        #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.box.business.FilmMakerDraft">
+    update t_film_maker_draft
+    <set>
+      <if test="dataSourcePlatform != null">
+        data_source_platform = #{dataSourcePlatform,jdbcType=TINYINT},
+      </if>
+      <if test="sourceFilmMakerId != null">
+        source_film_maker_id = #{sourceFilmMakerId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cnName != null">
+        cn_name = #{cnName,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        en_name = #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCnName != null">
+        other_cn_name = #{otherCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherEnName != null">
+        other_en_name = #{otherEnName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        birthplace = #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="birthCountry != null">
+        birth_country = #{birthCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="starSign != null">
+        star_sign = #{starSign,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        profession = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="family != null">
+        family = #{family,jdbcType=VARCHAR},
+      </if>
+      <if test="awards != null">
+        awards = #{awards,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null">
+        data_source = #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null">
+        mtime = #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.box.business.FilmMakerDraft">
+    update t_film_maker_draft
+    set data_source_platform = #{dataSourcePlatform,jdbcType=TINYINT},
+      source_film_maker_id = #{sourceFilmMakerId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      cn_name = #{cnName,jdbcType=VARCHAR},
+      en_name = #{enName,jdbcType=VARCHAR},
+      other_cn_name = #{otherCnName,jdbcType=VARCHAR},
+      other_en_name = #{otherEnName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      birthplace = #{birthplace,jdbcType=VARCHAR},
+      birth_country = #{birthCountry,jdbcType=VARCHAR},
+      star_sign = #{starSign,jdbcType=VARCHAR},
+      profession = #{profession,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      family = #{family,jdbcType=VARCHAR},
+      awards = #{awards,jdbcType=VARCHAR},
+      data_source = #{dataSource,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
