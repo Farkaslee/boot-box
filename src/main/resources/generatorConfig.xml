@@ -1,68 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
     <!-- 此文件用于生成数据库表model和基本sqlmap -->
-<!--    <classPathEntry location="/Users/yusenhua/Documents/repository_oyo/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar"/>-->
+    <!--    <classPathEntry location="/Users/yusenhua/Documents/repository_oyo/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar"/>-->
     <!--   <classPathEntry location="/Users/farkas/.m2/repository/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar"/>-->
     <classPathEntry location="/Users/lifangliang/software/mysql-connector-java-5.1.47.jar"/>
-       <context id="fundpayGenerator" targetRuntime="MyBatis3">
-           <property name="mergeable" value="false"></property>
+    <context id="fundpayGenerator" targetRuntime="MyBatis3">
+        <property name="mergeable" value="false"></property>
 
-            <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
-           <plugin type="com.boot.box.generator.LomBokPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="com.boot.box.generator.LomBokPlugin"/>
 
-           <commentGenerator type="com.boot.box.generator.CustomCommentPlugin">
-               <property name="suppressAllComments" value="true"/>
-               <property name="suppressDate" value="false"/>
-           </commentGenerator>
+        <commentGenerator type="com.boot.box.generator.CustomCommentPlugin">
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="false"/>
+        </commentGenerator>
 
-           <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                           connectionURL="jdbc:mysql://172.16.33.205:3307/pgc_media?useUnicode=true"
-                           userId="pgc_test"
-                           password="pgc_test" />
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://172.16.33.205:3306/bili2_platform?useUnicode=true"
+                        userId="bangumi"
+                        password="SbBR5yRCYuMdYyor"/>
 
-           <javaTypeResolver  type="com.boot.box.generator.DataTypeResolver">
-               <property name="forceBigDecimals" value="false" />
-           </javaTypeResolver>
+        <javaTypeResolver type="com.boot.box.generator.DataTypeResolver">
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
 
-           <javaModelGenerator targetPackage="com.boot.box.business"
-                               targetProject="../boot-box/src/main/java">
-               <property name="enableSubPackages" value="false" />
-               <property name="trimStrings" value="true" />
-           </javaModelGenerator>
+        <javaModelGenerator targetPackage="com.boot.box.business"
+                            targetProject="../boot-box/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
 
-           <sqlMapGenerator targetPackage="mapper"
-                            targetProject="../boot-box/src/main/resources">
-               <property name="enableSubPackages" value="false" />
-           </sqlMapGenerator>
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="../boot-box/src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
 
-           <javaClientGenerator targetPackage="com.boot.box.business"
-                                targetProject="../boot-box/src/main/java" type="XMLMAPPER">
-               <property name="enableSubPackages" value="false" />
-           </javaClientGenerator>
-
-
-           <table tableName="t_media_draft"
-                  domainObjectName="MediaDraft"
-                  mapperName="MediaDraftMapper"
-                  enableCountByExample="false"
-                  enableUpdateByExample="false"
-                  enableDeleteByExample="false"
-                  enableSelectByExample="false"
-                  selectByExampleQueryId="false">
-           </table>
-
-           <table tableName="t_film_maker_draft"
-                  domainObjectName="FilmMakerDraft"
-                  mapperName="FilmMakerDraftMapper"
-                  enableCountByExample="false"
-                  enableUpdateByExample="false"
-                  enableDeleteByExample="false"
-                  enableSelectByExample="false"
-                  selectByExampleQueryId="false">
-           </table>
+        <javaClientGenerator targetPackage="com.boot.box.business"
+                             targetProject="../boot-box/src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
 
 
+        <table tableName="t_content_tag"
+               domainObjectName="ContentTag"
+               mapperName="ContentTagMapper"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               enableDeleteByPrimaryKey="false">
+        </table>
 
-   </context>
+        <table tableName="t_archive_tag"
+               domainObjectName="ArchiveTag"
+               mapperName="ArchiveTagMapper"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               enableDeleteByPrimaryKey="false">
+        </table>
+
+
+    </context>
 </generatorConfiguration>
