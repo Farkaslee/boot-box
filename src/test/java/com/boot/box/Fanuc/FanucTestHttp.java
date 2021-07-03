@@ -1,9 +1,7 @@
-package com.boot.box;
+package com.boot.box.Fanuc;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
-import com.boot.box.Fanuc.ResultItem;
-import com.boot.box.Fanuc.ShanghaiFanucResult;
 import com.boot.utils.TestFileUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,12 +20,12 @@ import java.util.stream.Stream;
  * @date 2020/10/22 12:12 下午
  * @description
  */
-public class FanucTest {
+public class FanucTestHttp {
 
     @Test
     public void testHttp() {
         //产生顺序字符串
-        int cycleTimes = 200;
+        int cycleTimes = 499;
         int numLength = 3;
         List<String> strings = Stream.iterate(1, item -> item + 1).limit(cycleTimes)
                 .map(item -> String.valueOf(item))
@@ -75,7 +73,7 @@ public class FanucTest {
 
     @Test
     public void testNumber() {
-        int cycleTimes = 200;
+        int cycleTimes = 499;
         int numLength = 3;
 
         List<String> strings = Stream.iterate(1, item -> item + 1).limit(cycleTimes)
