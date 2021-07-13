@@ -22,11 +22,6 @@ public class WordResultItemSP {
     private String faultInfo;
 
     /**
-     * 内容
-     */
-    private String faultContent;
-
-    /**
      * 放大器显示*1
      */
     private String displayInfo;
@@ -35,5 +30,9 @@ public class WordResultItemSP {
      * 故障位置和处理办法
      */
     private String handleMethod;
+    /**
+     * 内容
+     */
+    private String faultContent;
 
 }
