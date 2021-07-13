@@ -7,12 +7,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.junit.Test;
+import org.springframework.http.HttpEntity;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.GZIPInputStream;
 
 /**
  * @author lifangliang
@@ -83,5 +88,48 @@ public class FanucTestHttp {
                     return item;
                 }).collect(Collectors.toList());
     }
+
+    @Test
+    public void testshukonggu(){
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url("http://skg.hzyskg.com/skg/index.php/Myapi/Alarm/Msg?id=143241&type=1&userid=8446")
+                .method("GET", null)
+
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            System.out.println("---------- size :" + new String(response.body().bytes(),"UTF-8"));
+            System.out.println("---------- size :" + getResponseString(response.body().bytes()));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getResponseString(byte[] buf){
+        try {
+            GZIPInputStream gzip = new GZIPInputStream(
+                    new ByteArrayInputStream(buf));
+            InputStreamReader isr = new InputStreamReader(gzip);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String temp;
+            while((temp = br.readLine()) != null){
+                sb.append(temp);
+                sb.append("\r\n");
+            }
+            isr.close();
+            gzip.close();
+
+            return sb.toString();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }
 
