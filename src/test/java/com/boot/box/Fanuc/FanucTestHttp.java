@@ -7,12 +7,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.junit.Test;
-import org.springframework.http.HttpEntity;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,7 +86,7 @@ public class FanucTestHttp {
     }
 
     @Test
-    public void testshukonggu(){
+    public void testshukonggu() {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -100,15 +96,21 @@ public class FanucTestHttp {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            System.out.println("---------- size :" + new String(response.body().bytes(),"UTF-8"));
-            System.out.println("---------- size :" + getResponseString(response.body().bytes()));
+            try {
+                String resultContent = new String(response.body().bytes(), "utf-8");
+                System.out.println("---------- content:" + new String(resultContent.getBytes(), "utf-8"));
+                System.out.println("---------- size uncompress :" + new String(uncompresss(response.body().bytes()), "UTF-8"));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            //System.out.println("---------- size :" + getResponseString(response.body().bytes()));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private String getResponseString(byte[] buf){
+    private String getResponseString(byte[] buf) {
         try {
             GZIPInputStream gzip = new GZIPInputStream(
                     new ByteArrayInputStream(buf));
@@ -116,7 +118,7 @@ public class FanucTestHttp {
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
             String temp;
-            while((temp = br.readLine()) != null){
+            while ((temp = br.readLine()) != null) {
                 sb.append(temp);
                 sb.append("\r\n");
             }
@@ -124,11 +126,37 @@ public class FanucTestHttp {
             gzip.close();
 
             return sb.toString();
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    public static byte[] uncompresss(byte[] bytes) throws Exception {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+
+        GZIPInputStream gzip = new GZIPInputStream(in);
+
+        byte[] buffer = new byte[1024];
+
+        int n;
+
+        while ((n = gzip.read(buffer)) >= 0) {
+            out.write(buffer, 0, n);
+
+        }
+
+        return out.toByteArray();
+
+    }
+
+    @Test
+    public void testUtil() throws UnsupportedEncodingException {
+        String s = new String("\u53d1\u90a3\u79d1-FANUC".getBytes(), "utf-8");
+        System.out.println(s);
     }
 
 }
