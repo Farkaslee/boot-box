@@ -1,6 +1,8 @@
 package com.boot.box.Fanuc;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson.JSON;
 import com.boot.utils.TestFileUtil;
 import okhttp3.OkHttpClient;
@@ -9,6 +11,10 @@ import okhttp3.Response;
 import org.junit.Test;
 
 import java.io.*;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -87,69 +93,60 @@ public class FanucTestHttp {
 
     @Test
     public void testshukonggu() {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url("http://skg.hzyskg.com/skg/index.php/Myapi/Alarm/Msg?id=143241&type=1&userid=8446")
-                .method("GET", null)
+        //143241
+        List<ShukongGuData> resultDataList = new ArrayList<>();
+        String fileName = TestFileUtil.getPath() + "repeatedWrite" + LocalDate.now() + "01" + ".xlsx";
+        // 这里 需要指定写用哪个class去写
+        ExcelWriter excelWriter = EasyExcel.write(fileName, ShukongGuData.class).build();
 
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
+        // 这里注意 如果同一个sheet只要创建一次
+        WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
+//200000
+        for(int i = 1;i<=200000;i++){
+            if(i%2000 == 0){
+                excelWriter.finish();
+                fileName = TestFileUtil.getPath() + "repeatedWrite" + LocalDate.now() + i + ".xlsx";
+                // 这里 需要指定写用哪个class去写
+                excelWriter = EasyExcel.write(fileName, ShukongGuData.class).build();
+            }
+            SocketAddress sa = new InetSocketAddress("14.18.109.42", 8081);
+            OkHttpClient client = new OkHttpClient().newBuilder().proxy(new Proxy(Proxy.Type.HTTP,sa))
+                    .build();
+            Request request = new Request.Builder()
+                    .url("http://skg.hzyskg.com/skg/index.php/Myapi/Alarm/Msg?id="+i+"&type=1&userid=8446")
+                    .method("GET", null)
+                    .build();
             try {
-                String resultContent = new String(response.body().bytes(), "utf-8");
-                System.out.println("---------- content:" + new String(resultContent.getBytes(), "utf-8"));
-                System.out.println("---------- size uncompress :" + new String(uncompresss(response.body().bytes()), "UTF-8"));
-            } catch (Exception exception) {
-                exception.printStackTrace();
+                Response response = client.newCall(request).execute();
+                try {
+                    String resultContent = new String(response.body().bytes(), "utf-8");
+                    System.out.println("---------- content:" + resultContent);
+                    ShukongResult shukongResult = JSON.parseObject(resultContent,ShukongResult.class);
+
+                    //System.out.println("---------- content data:" + new String(shukongResult.getData().getBytes(), "utf-8"));
+                    String resultData =new String(shukongResult.getData().getBytes(), "utf-8");
+                    ShukongGuData shukongGuData= JSON.parseObject(resultData,ShukongGuData.class);
+                    resultDataList.add(shukongGuData);
+                    if(resultDataList.size() >= 5){
+                        excelWriter.write(resultDataList, writeSheet);
+                        resultDataList.clear();
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            //System.out.println("---------- size :" + getResponseString(response.body().bytes()));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String getResponseString(byte[] buf) {
-        try {
-            GZIPInputStream gzip = new GZIPInputStream(
-                    new ByteArrayInputStream(buf));
-            InputStreamReader isr = new InputStreamReader(gzip);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String temp;
-            while ((temp = br.readLine()) != null) {
-                sb.append(temp);
-                sb.append("\r\n");
+            try {
+                Thread.sleep(Long.valueOf((long) (Math.random()*5000)));
+                System.out.println(Long.valueOf((long) (Math.random()*5000)) + "----------- : "+ resultDataList.size());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            isr.close();
-            gzip.close();
 
-            return sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static byte[] uncompresss(byte[] bytes) throws Exception {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-
-        GZIPInputStream gzip = new GZIPInputStream(in);
-
-        byte[] buffer = new byte[1024];
-
-        int n;
-
-        while ((n = gzip.read(buffer)) >= 0) {
-            out.write(buffer, 0, n);
 
         }
-
-        return out.toByteArray();
+        excelWriter.finish();
 
     }
 
@@ -157,6 +154,11 @@ public class FanucTestHttp {
     public void testUtil() throws UnsupportedEncodingException {
         String s = new String("\u53d1\u90a3\u79d1-FANUC".getBytes(), "utf-8");
         System.out.println(s);
+
+        for(int i = 1;i< 10;i++){
+            System.out.println(Long.valueOf((long) (Math.random()*3000)));
+
+        }
     }
 
 }
